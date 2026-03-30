@@ -1,17 +1,22 @@
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  databaseURL: "YOUR_DATABASE_URL",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    databaseURL: "YOUR_DATABASE_URL",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+const signinsRef = ref(database, 'signins');
 
 const form = document.getElementById("signInForm");
 const table = document.getElementById("records");
@@ -25,7 +30,7 @@ form.addEventListener("submit", function(e) {
   const signOut = document.getElementById("SignOut").value;
 
   // Save the data to Firebase
-  database.ref("signins").push({
+  push(signinsRef, {
     name: name,
     unit: unit,
     signIn: signIn,
@@ -36,7 +41,7 @@ form.addEventListener("submit", function(e) {
 });
 
 // Listen for new sign-ins and add them to the table
-database.ref("signins").on("child_added", function(snapshot) {
+onChildAdded(signinsRef, function(snapshot) {
   const signInData = snapshot.val();
   const row = table.insertRow();
   row.insertCell(0).innerText = signInData.name;
@@ -46,6 +51,6 @@ database.ref("signins").on("child_added", function(snapshot) {
 });
 
 // The exportData function is no longer needed as the data is stored in Firebase.
-function exportData() {
+window.exportData = function() {
     alert("This feature has been removed. Your data is now stored in a database.");
 }
