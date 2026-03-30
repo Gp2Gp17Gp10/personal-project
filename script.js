@@ -4,13 +4,13 @@ import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/fi
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    databaseURL: "YOUR_DATABASE_URL",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBRMsNMw6DnOy-dACmcVUVZKpGCcvYaxhI",
+  authDomain: "personal-project-68033.firebaseapp.com",
+  databaseURL: "https://personal-project-68033.firebaseio.com",
+  projectId: "personal-project-68033",
+  storageBucket: "personal-project-68033.firebasestorage.app",
+  messagingSenderId: "1063849884402",
+  appId: "1:1063849884402:web:49a846953bec587cf5ae6b"
 };
 
 // Initialize Firebase
