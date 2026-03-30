@@ -12,14 +12,14 @@ form.addEventListener("submit", function(e) {
   const row = table.insertRow();
   row.insertCell(0).innerText = name;
   row.insertCell(1).innerText = unit;
-  row.insertCell(2).innerText = timeIn;
-  row.insertCell(3).innerText = timeOut;
+  row.insertCell(2).innerText = SignIn;
+  row.insertCell(3).innerText = SignOut;
 
   form.reset();
 });
 
 function exportData() {
-  let csv = "Name,Unit,Time In,Time Out\n";
+  let csv = "Name,Unit,Sign In,Sign Out\n";
   const rows = table.rows;
 
   for (let i = 1; i < rows.length; i++) {
