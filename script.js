@@ -1,3 +1,19 @@
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  databaseURL: "YOUR_DATABASE_URL",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
 const form = document.getElementById("signInForm");
 const table = document.getElementById("records");
 
@@ -6,31 +22,32 @@ form.addEventListener("submit", function(e) {
 
   const name = document.getElementById("name").value;
   const unit = document.getElementById("unit").value;
-  const timeIn = document.getElementById("timeIn").value;
-  const timeOut = document.getElementById("timeOut").value;
+  const signIn = document.getElementById("SignIn").value;
+  const signOut = document.getElementById("SignOut").value;
 
-  const row = table.insertRow();
-  row.insertCell(0).innerText = name;
-  row.insertCell(1).innerText = unit;
-  row.insertCell(2).innerText = SignIn;
-  row.insertCell(3).innerText = SignOut;
+  // Save the data to Firebase
+  database.ref("signins").push({
+    name: name,
+    unit: unit,
+    signIn: signIn,
+    signOut: signOut
+  });
 
   form.reset();
 });
 
+// Listen for new sign-ins and add them to the table
+database.ref("signins").on("child_added", function(snapshot) {
+  const signInData = snapshot.val();
+  const row = table.insertRow();
+  row.insertCell(0).innerText = signInData.name;
+  row.insertCell(1).innerText = signInData.unit;
+  row.insertCell(2).innerText = signInData.signIn;
+  row.insertCell(3).innerText = signInData.signOut;
+});
+
+// The exportData function is no longer needed as the data is stored in Firebase.
 function exportData() {
-  let csv = "Name,Unit,Sign In,Sign Out\n";
-  const rows = table.rows;
-
-  for (let i = 1; i < rows.length; i++) {
-    const cells = rows[i].cells;
-    csv += `${cells[0].innerText},${cells[1].innerText},${cells[2].innerText},${cells[3].innerText}\n`;
-  }
-
-  const blob = new Blob([csv], { type: "text/csv" });
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "gym_signin_data.csv";
-  a.click();
+    alert("This feature has been removed. Your data is now stored in a database.");
 }
+
