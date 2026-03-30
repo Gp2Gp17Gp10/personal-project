@@ -1,4 +1,3 @@
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
@@ -50,4 +49,3 @@ database.ref("signins").on("child_added", function(snapshot) {
 function exportData() {
     alert("This feature has been removed. Your data is now stored in a database.");
 }
-
